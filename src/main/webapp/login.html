@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peter OA System</title>
+    <link rel="stylesheet" type="text/css" href="assets/element-plus/index.css">
+    <script src="/assets/vue/vue.global.js"></script>
+    <script src="/assets/element-plus/index.full.js"></script>
+    <script src="/assets/axios/axios.js"></script>
+    <style>
+        .login-box {
+            border: 1px solid #DCDFE6;
+            width: 350px;
+            margin: 180px auto;
+            padding: 35px 35px 15px 35px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            box-shadow: 0 0 25px #909399;
+        }
+
+        .login-title {
+            text-align: center;
+            margin: 0 auto 40px auto;
+            color: #3a8ee6;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <el-form ref="loginForm" label-with="80px" :model="form" :rules="rules" class="login-box">
+        <h2 class="login-title">Peter's OA System</h2>
+        <el-form-item label="Username" prop="username">
+            <el-input type="text" placeholder="Username" v-model="form.username"/>
+        </el-form-item>
+        <el-form-item label="Password" prop="password">
+            <el-input type="password" placeholder="Password" v-model="form.password"/>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary"
+                       style="width:200px"
+                       v-on:click="onSubmit('loginForm')"
+            >Login</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    const Main = {
+        data() {
+            return {
+                form: {
+                    username: 'Peter'
+                    , password: '123456'
+                }
+                , rules: {
+                    username: [
+                        {required: true, message: 'Not null', trigger: 'blur'}
+                    ]
+                    , password: [
+                        {required: true, message: 'Not null', trigger: 'blur'}
+
+                    ]
+                }
+            }
+        }
+        ,methods: {
+            onSubmit(fromName) {
+                const form = this.$refs[fromName];
+                form.validate((valid) => {
+                    if (valid) {
+                        console.info('submit');
+                    }
+                })
+            },
+        }
+    };
+    const app = Vue.createApp(Main);
+    app.use(ElementPlus);
+    app.mount("#app");
+</script>
+</body>
+</html>
