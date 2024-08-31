@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.function.Function;
 
-public class MybatisUtils {
+public class MybatisUtils{
 
     private static SqlSessionFactory sqlSessionFactory = null;
 
@@ -19,30 +19,28 @@ public class MybatisUtils {
             reader = Resources.getResourceAsReader("mybatis-config.xml");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {
-            // Exception when initialize some function
             throw new ExceptionInInitializerError(e);
         }
     }
 
-    public static Object executeQuery(Function<SqlSession, Object> func) {
-        try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+    public static Object executeQuery(Function<SqlSession, Object> func){
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return func.apply(sqlSession);
         }
     }
 
-    public static Object executeUpdate(Function<SqlSession, Object> func) {
+    public static Object executeUpdate(Function<SqlSession, Object> func){
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
-
-        try {
+        try  {
             Object obj = func.apply(sqlSession);
             sqlSession.commit();
             return obj;
-        } catch (Exception e) {
+        }catch (Exception e){
+            e.printStackTrace();
             sqlSession.rollback();
-        } finally {
+        }finally {
             sqlSession.close();
         }
         return null;
     }
 }
-

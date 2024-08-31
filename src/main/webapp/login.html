@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Peter OA System</title>
+    <title>Peter's OA System</title>
     <link rel="stylesheet" type="text/css" href="assets/element-plus/index.css">
     <script src="/assets/vue/vue.global.js"></script>
     <script src="/assets/element-plus/index.full.js"></script>
@@ -18,30 +18,25 @@
             -moz-border-radius: 5px;
             box-shadow: 0 0 25px #909399;
         }
-
-        .login-title {
+        .login-title{
             text-align: center;
             margin: 0 auto 40px auto;
-            color: #3a8ee6;
+            color: #303133;
         }
     </style>
 </head>
 <body>
 <div id="app">
-
-    <el-form ref="loginForm" label-with="80px" :model="form" :rules="rules" class="login-box">
+    <el-form ref="loginForm" label-width="80px" :rules="rules" :model="form" class="login-box">
         <h2 class="login-title">Peter's OA System</h2>
         <el-form-item label="Username" prop="username">
-            <el-input type="text" placeholder="Username" v-model="form.username"/>
+            <el-input type="text" placeholder="Username" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="Password" prop="password">
-            <el-input type="password" placeholder="Password" v-model="form.password"/>
+            <el-input type="password" placeholder="Password" v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary"
-                       style="width:200px"
-                       v-on:click="onSubmit('loginForm')"
-            >Login</el-button>
+            <el-button type="primary" v-on:click="onSubmit('loginForm')" style="width:200px">Login</el-button>
         </el-form-item>
     </el-form>
 </div>
@@ -50,29 +45,42 @@
         data() {
             return {
                 form: {
-                    username: 'Peter'
-                    , password: '123456'
+                    username: ''
+                    ,password: ''
                 }
-                , rules: {
+                ,rules:{
                     username: [
-                        {required: true, message: 'Not null', trigger: 'blur'}
-                    ]
-                    , password: [
-                        {required: true, message: 'Not null', trigger: 'blur'}
-
+                        {required: true,message : 'Username required' , trigger:'blur'}
+                    ],
+                    password:[
+                        {required: true,message : 'Password required' , trigger:'blur'}
                     ]
                 }
             }
         }
-        ,methods: {
-            onSubmit(fromName) {
-                const form = this.$refs[fromName];
+        ,methods : {
+            onSubmit(formName){
+                const form = this.$refs[formName];
                 form.validate((valid) => {
-                    if (valid) {
-                        console.info('submit');
+                    if(valid){
+                        console.info("Form check passed.");
+                        const form = this.form;
+                        const $message = this.$message;
+                        const params = new URLSearchParams();
+                        params.append("username", form.username);
+                        params.append("password", form.password);
+                        axios.post("/api/login", params, {}).then(function (response) {
+                            console.info(response);
+                            const json = response.data;
+                            if(json.code=="0"){
+                                window.location.href = "/index.html";
+                            }else{
+                                $message.error({message:json.message, offset: 100});
+                            }
+                        });
                     }
                 })
-            },
+            }
         }
     };
     const app = Vue.createApp(Main);

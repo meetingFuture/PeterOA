@@ -1,8 +1,8 @@
-package com.peter.oa.entiry;
+package com.peter.oa.entity;
 
 public class User {
     private Long userId;
-    private String username;
+    private String userName;
     private String password;
     private Long employeeId;
     private Integer salt;
@@ -11,7 +11,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", username='" + username + '\'' +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", employeeId=" + employeeId +
                 ", salt=" + salt +
@@ -26,12 +26,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

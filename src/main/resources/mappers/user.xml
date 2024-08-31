@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="usermapper">
-    <select id="selectByUsername" parameterType="String" resultType="com.peter.oa.entiry.User">
+    <select id="selectByUsername" resultType="com.peter.oa.entity.User" parameterType="String">
         select * from sys_user where username = #{value}
     </select>
 </mapper>

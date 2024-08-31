@@ -1,21 +1,23 @@
 package com.peter.oa.service;
 
-import com.peter.oa.entiry.User;
+import com.peter.oa.entity.User;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class UserServiceTest {
-    private UserService userService = new UserService();
+
     @Test
-    public void checkLogin1() {
-        User user = userService.checkLogin("test", "test");
-        System.out.println(user);
+    public void checkLogin() {
+        UserService userService = new UserService();
+        User user = userService.checkLogin("m8", "test1");
+        System.out.println(user.toString());
     }
 
     @Test
     public void checkLogin2() {
-        User user = userService.checkLogin("test", "test1");
-        System.out.println(user);
+        UserService userService = new UserService();
+        User user = userService.checkLogin("m8", "test");
+        System.out.println(user.toString());
     }
 }

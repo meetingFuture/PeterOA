@@ -1,7 +1,8 @@
 package com.peter.oa.mapper;
 
-import com.peter.oa.entiry.User;
+import com.peter.oa.entity.User;
 import com.peter.oa.utils.MybatisUtils;
+import org.apache.ibatis.session.SqlSession;
 
 public class UserMapper {
     public User selectByUsername(String username) {
